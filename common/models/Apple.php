@@ -2,7 +2,10 @@
 
 namespace common\models;
 
+use common\events\FruitEatenEvent;
 use common\exceptions\FruitException;
+use common\behaviors\FruitLoggerBehavior;
+use common\events\FruitFallOnGroundEvent;
 use common\behaviors\FruitCreatedAtBehavior;
 
 /**
@@ -45,6 +48,10 @@ class Apple extends \yii\db\ActiveRecord
     {
         return [
             FruitCreatedAtBehavior::class,
+            [
+                'class' => FruitLoggerBehavior::class,
+                'type' => 'Яблоко',
+            ]
         ];
     }
 
@@ -97,7 +104,9 @@ class Apple extends \yii\db\ActiveRecord
         }
 
         $this->fall_at = time();
-        $this->update(false);
+        if ($this->update(false)) {
+            $this->trigger(FruitFallOnGroundEvent::EVENT_NAME);
+        }
     }
 
     public function eat(int $percent)
@@ -109,6 +118,10 @@ class Apple extends \yii\db\ActiveRecord
         }
 
         $this->eaten_up += $percent;
-        $this->update(false);
+        if ($this->update(false)) {
+            $this->trigger(FruitEatenEvent::EVENT_NAME, new FruitEatenEvent([
+                'percent' => $percent,
+            ]));
+        }
     }
 }

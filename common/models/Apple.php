@@ -2,9 +2,8 @@
 
 namespace common\models;
 
-use Yii;
-use yii\behaviors\TimestampBehavior;
 use common\exceptions\FruitException;
+use common\behaviors\FruitCreatedAtBehavior;
 
 /**
  * This is the model class for table "apples".
@@ -18,12 +17,11 @@ use common\exceptions\FruitException;
 class Apple extends \yii\db\ActiveRecord
 {
     public const LIFE_HOURS = 5;
+    public const EATEN_MAX_VALUE = 100;
 
     public const STATE_HANGING = 'hanging';
     public const STATE_FALL = 'fall';
     public const STATE_ROTTEN = 'rotten';
-
-    private const EATEN_MAX_VALUE = 100;
 
     /**
      * {@inheritdoc}
@@ -33,7 +31,7 @@ class Apple extends \yii\db\ActiveRecord
         return 'apples';
     }
 
-    public function __construct(string $color, array $config = [])
+    public function __construct(string $color = null, array $config = [])
     {
         parent::__construct($config);
         
@@ -46,10 +44,7 @@ class Apple extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            [
-                'class' => TimestampBehavior::class,
-                'updatedAtAttribute' => null,
-            ]
+            FruitCreatedAtBehavior::class,
         ];
     }
 

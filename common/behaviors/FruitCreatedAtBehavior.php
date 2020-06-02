@@ -8,7 +8,6 @@ use yii\behaviors\AttributeBehavior;
 class FruitCreatedAtBehavior extends AttributeBehavior
 {
     public $createdAtAttribute = 'created_at';
-    public $lifeHours = 5;
 
     /**
      * {@inheritdoc}
@@ -28,7 +27,7 @@ class FruitCreatedAtBehavior extends AttributeBehavior
     protected function getValue($event)
     {
         if ($this->value === null) {
-            return time() - \random_int(0, 2 * $this->lifeHours * 3600);
+            return time() - \random_int(0, 5 * 3600);
         }
 
         return parent::getValue($event);

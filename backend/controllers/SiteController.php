@@ -3,9 +3,10 @@ namespace backend\controllers;
 
 use Yii;
 use yii\web\Controller;
+use common\models\Apple;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
+use yii\filters\AccessControl;
 
 /**
  * Site controller
@@ -60,7 +61,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $apples = Apple::find()
+            ->where('eaten_up < :maxEaten', ['maxEaten' => Apple::EATEN_MAX_VALUE])
+            ->orderBy('id DESC')
+            ->limit(100)
+            ->all();
+
+        return $this->render('index', [
+            'apples' => $apples,
+        ]);
     }
 
     /**

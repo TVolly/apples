@@ -1,6 +1,7 @@
 <?php
 /* 
  * @var \yii\web\View $this
+ * @var \common\models\Apple[] $apples
  */
 
 use yii\helpers\Url;
@@ -12,11 +13,19 @@ $this->title = 'Apples';
 
 <div class="text-right">
     <?= Html::a(
-        'Создать яблоки',
+        'Добавить яблоки',
         Url::to(['apples/create-many']), 
         [
             'class' => 'btn btn-success',
             'data-method' => 'POST',
         ]
     ); ?>
+</div>
+
+<div>
+    <?php foreach ($apples as $apple): ?>
+        <div class="apple-row" id="apple-<?= $apple->id; ?>">
+            <?= $this->render('_apple_view', ['model' => $apple]); ?>
+        </div>
+    <?php endforeach; ?>
 </div>

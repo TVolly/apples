@@ -78,7 +78,7 @@ class Apple extends \yii\db\ActiveRecord
     {
         if ($this->fall_at === null) {
             return self::STATE_HANGING;
-        } elseif ($this->fall_at > time() - self::LIFE_HOURS * 3600) {
+        } elseif ($this->fall_at > (time() - self::LIFE_HOURS * 3600)) {
             return self::STATE_FALL;
         }
 

@@ -119,3 +119,23 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.apple-row {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.apple-row__circle {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.apple-row .alert-danger {
+    display: none;
+}
+
+.apple-row.has-error .alert-danger {
+    display: block;
+}

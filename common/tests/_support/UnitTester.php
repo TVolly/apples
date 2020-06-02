@@ -22,4 +22,15 @@ class UnitTester extends \Codeception\Actor
    /**
     * Define custom actions here
     */
+
+    public function expectException($callback, $exceptionClass)
+    {
+        $validException = false;
+        try {
+            $callback();
+        } catch (\Exception $e) {
+            $validException = is_a($e, $exceptionClass);
+        }
+        expect('fall exception', $validException)->true();
+    }
 }

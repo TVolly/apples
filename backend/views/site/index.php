@@ -22,10 +22,18 @@ $this->title = 'Apples';
     ); ?>
 </div>
 
-<div>
+<div class="row">
+
+<div class="col-md-3">
+    <?= \backend\widgets\AppleLogsWidget::widget(); ?>
+</div>
+
+<div class="col-md-9">
     <?php foreach ($apples as $apple): ?>
         <div class="apple-row" id="apple-<?= $apple->id; ?>">
             <?= $this->render('_apple_view', ['model' => $apple]); ?>
         </div>
     <?php endforeach; ?>
+</div>
+
 </div>
